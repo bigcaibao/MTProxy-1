@@ -23,7 +23,7 @@ plain='\033[0m'
 [[ $EUID -ne 0 ]] && echo -e "[${red}Error${plain}]Please run this script with ROOT!" && exit 1
 
 download_file(){
-	echo "Checking System..."
+	echo "正在检查系统..."
 
 	bit=`uname -m`
 	if [[ ${bit} = "x86_64" ]]; then
@@ -55,7 +55,7 @@ download_file(){
 }
 
 configure_mtg(){
-    echo -e "Configuring mtg..."
+    echo -e "开始配置 mtg..."
     wget -N --no-check-certificate -O /etc/mtg.toml https://raw.githubusercontent.com/missuo/MTProxy/main/mtg.toml
     
     echo ""
