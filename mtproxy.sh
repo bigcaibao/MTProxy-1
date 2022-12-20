@@ -59,33 +59,33 @@ configure_mtg(){
     wget -N --no-check-certificate -O /etc/mtg.toml https://raw.githubusercontent.com/missuo/MTProxy/main/mtg.toml
     
     echo ""
-    read -p "Please enter a spoofed domain (default itunes.apple.com): " domain
-	[ -z "${domain}" ] && domain="itunes.apple.com"
+    read -p "输入伪装域名 (例如 qifei.shabibaidu.com): " domain
+	[ -z "${domain}" ] && domain="qifei.shabibaidu.com"
 
 	echo ""
-    read -p "Enter the port to be listened to (default 8443):" port
+    read -p "输入监听端口 (默认 8443):" port
 	[ -z "${port}" ] && port="8443"
 
     secret=$(mtg generate-secret --hex $domain)
     
-    echo "Waiting configuration..."
+    echo "正在配置中..."
 
     sed -i "s/secret.*/secret = \"${secret}\"/g" /etc/mtg.toml
     sed -i "s/bind-to.*/bind-to = \"0.0.0.0:${port}\"/g" /etc/mtg.toml
 
-    echo "mtg configured successfully, start to configure systemctl..."
+    echo "mtg配置成功,开始配置systemctl..."
 }
 
 configure_systemctl(){
-    echo -e "Configuring systemctl..."
+    echo -e "正在配置 systemctl..."
     wget -N --no-check-certificate -O /etc/systemd/system/mtg.service https://raw.githubusercontent.com/missuo/MTProxy/main/mtg.service
     systemctl enable mtg
     systemctl start mtg
-    echo "mtg configured successfully, start to configure firewall..."
+    echo "mtg 配置成功,开始配置防火墙..."
     systemctl disable firewalld
     systemctl stop firewalld
     ufw disable
-    echo "mtg start successfully, enjoy it!"
+    echo "mtg 启动成功,enjoy it!"
     echo ""
     # echo "mtg configuration:"
     # mtg_config=$(mtg access /etc/mtg.toml)
@@ -97,51 +97,51 @@ configure_systemctl(){
 }
 
 change_port(){
-    read -p "Enter the port you want to modify(default 8443):" port
+    read -p "输入你要修改的端口(默认 8443):" port
 	[ -z "${port}" ] && port="8443"
     sed -i "s/bind-to.*/bind-to = \"0.0.0.0:${port}\"/g" /etc/mtg.toml
-    echo "Restarting MTProxy..."
+    echo "正在重启MTProxy..."
     systemctl restart mtg
-    echo "MTProxy restarted successfully!"
+    echo "MTProxy 重启完毕...!"
 }
 
 change_secret(){
-    echo -e "Please note that unauthorized modification of Secret may cause MTProxy to not function properly."
-    read -p "Enter the secret you want to modify:" secret
+    echo -e "请注意,不正确的修改Secret可能会导致MTProxy无法正常工作。."
+    read -p "输入你要修改的Secret密钥:" secret
 	[ -z "${secret}" ] && secret="$(mtg generate-secret --hex itunes.apple.com)"
     sed -i "s/secret.*/secret = \"${secret}\"/g" /etc/mtg.toml
-    echo "Secret changed successfully!"
-    echo "Restarting MTProxy..."
+    echo "Secret密钥更改完成!"
+    echo "正在重启MTProxy..."
     systemctl restart mtg
-    echo "MTProxy restarted successfully!"
+    echo "MTProxy 重启完毕...!"
 }
 
 update_mtg(){
-    echo -e "Updating mtg..."
+    echo -e "正在升级 mtg..."
     download_file
-    echo "mtg updated successfully, start to restart MTProxy..."
+    echo "mtg 升级成功,开始重新启动MTProxy..."
     systemctl restart mtg
-    echo "MTProxy restarted successfully!"
+    echo "MTProxy已成功启动...!"
 }
 
 start_menu() {
     clear
-    echo -e "  MTProxy v2 One-Click Installation
+    echo -e "  MTProxy v2 一键安装脚本
 ---- by Vincent | github.com/missuo/MTProxy ----
- ${green} 1.${plain} Install MTProxy
- ${green} 2.${plain} Uninstall MTProxy
+ ${green} 1.${plain} 安装MTproxy
+ ${green} 2.${plain} 卸载MTproxy
 ————————————
- ${green} 3.${plain} Start MTProxy
- ${green} 4.${plain} Stop MTProxy
- ${green} 5.${plain} Restart MTProxy
- ${green} 6.${plain} Change Listen Port
- ${green} 7.${plain} Change Secret
- ${green} 8.${plain} Update MTProxy
+ ${green} 3.${plain} 启动 MTProxy
+ ${green} 4.${plain} 停止 MTProxy
+ ${green} 5.${plain} 重启 MTProxy
+ ${green} 6.${plain} 更改端口
+ ${green} 7.${plain} 更改密钥
+ ${green} 8.${plain} 升级脚本
 ————————————
  ${green} 0.${plain} Exit
 ————————————" && echo
 
-	read -e -p " Please enter the number [0-8]: " num
+	read -e -p " 请输入对应数字选择 [0-8]: " num
 	case "$num" in
     1)
 		download_file
@@ -155,24 +155,24 @@ start_menu() {
         rm -rf /usr/bin/mtg
         rm -rf /etc/mtg.toml
         rm -rf /etc/systemd/system/mtg.service
-        echo "Uninstall MTProxy successfully!"
+        echo "MTProxy已成功卸载!"
         ;;
     3) 
-        echo "Starting MTProxy..."
+        echo "正在启动MTProxy..."
         systemctl start mtg
         systemctl enable mtg
-        echo "MTProxy started successfully!"
+        echo "MTProxy 启动成功!"
         ;;
     4) 
-        echo "Stopping MTProxy..."
+        echo "正在停止MTProxy..."
         systemctl stop mtg
         systemctl disable mtg
-        echo "MTProxy stopped successfully!"
+        echo "MTProxy 停止成功!"
         ;;
     5)  
-        echo "Restarting MTProxy..."
+        echo "正在重启MTProxy..."
         systemctl restart mtg
-        echo "MTProxy restarted successfully!"
+        echo "MTProxy 重启成功!"
         ;;
     6) 
         change_port
