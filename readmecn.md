@@ -26,7 +26,7 @@
 # 安装
 ---
 ```
-bash <(curl -Ls https://raw.githubusercontent.com/bigcaibao/MTProxy-1/master/mtproxy.sh)
+bash <(curl -Ls https://raw.githubusercontent.com/bigcaibao/MTProxy-V2/master/mtproxy.sh)
 ```
 
 # 技术
