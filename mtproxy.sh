@@ -2,12 +2,12 @@
 ###
  # @Author: Vincent Young
  # @Date: 2022-07-01 15:29:23
- # @LastEditors: Vincent Young
- # @LastEditTime: 2022-07-30 19:26:45
+ # @LastEditors: Mr.X
+ # @LastEditTime: 2022-12-20 23:26:45
  # @FilePath: /MTProxy/mtproxy.sh
- # @Telegram: https://t.me/missuo
+ # @Websie: https://mrx.la
  # 
- # Copyright © 2022 by Vincent, All Rights Reserved. 
+ # Copyright © 2022 by Mr.X, All Rights Reserved. 
 ### 
 
 PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
@@ -20,7 +20,7 @@ yellow='\033[0;33m'
 plain='\033[0m'
 
 # Make sure run with root
-[[ $EUID -ne 0 ]] && echo -e "[${red}Error${plain}]Please run this script with ROOT!" && exit 1
+[[ $EUID -ne 0 ]] && echo -e "[${red}Error${plain}]请使用root账户运行脚本!" && exit 1
 
 download_file(){
 	echo "正在检查系统..."
@@ -36,7 +36,7 @@ download_file(){
 
     last_version=$(curl -Ls "https://api.github.com/repos/9seconds/mtg/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
     if [[ ! -n "$last_version" ]]; then
-        echo -e "${red}Failure to detect mtg version may be due to exceeding Github API limitations, please try again later."
+        echo -e "${red}未能获取到mtg版本可能是由于超过了Github API限制,请稍后重试."
         exit 1
     fi
     echo -e "Latest version of mtg detected: ${last_version}, start installing..."
@@ -78,7 +78,7 @@ configure_mtg(){
 
 configure_systemctl(){
     echo -e "正在配置 systemctl..."
-    wget -N --no-check-certificate -O /etc/systemd/system/mtg.service https://raw.githubusercontent.com/missuo/MTProxy/main/mtg.service
+    wget -N --no-check-certificate -O /etc/systemd/system/mtg.service https://raw.githubusercontent.com/bigcaibao/MTProxy-V2/main/mtg.service
     systemctl enable mtg
     systemctl start mtg
     echo "mtg 配置成功,开始配置防火墙..."
@@ -108,7 +108,7 @@ change_port(){
 change_secret(){
     echo -e "请注意,不正确的修改Secret可能会导致MTProxy无法正常工作。."
     read -p "输入你要修改的Secret密钥:" secret
-	[ -z "${secret}" ] && secret="$(mtg generate-secret --hex itunes.apple.com)"
+	[ -z "${secret}" ] && secret="$(mtg generate-secret --hex qifei.shabibaidu.com)"
     sed -i "s/secret.*/secret = \"${secret}\"/g" /etc/mtg.toml
     echo "Secret密钥更改完成!"
     echo "正在重启MTProxy..."
@@ -127,7 +127,7 @@ update_mtg(){
 start_menu() {
     clear
     echo -e "  MTProxy v2 一键安装脚本
----- by Vincent | github.com/missuo/MTProxy ----
+---- 汉化 Mr.X | github.com/bigcaibao/MTProxy-V2 ----
  ${green} 1.${plain} 安装MTproxy
  ${green} 2.${plain} 卸载MTproxy
 ————————————
