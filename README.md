@@ -8,7 +8,7 @@
  * 
  * Copyright © 2022 by Vincent, All Rights Reserved. 
 -->
-# [中文说明](https://github.com/bigcaibao/MTProxy-1/blob/main/READMECN.md)
+# [中文说明](https://github.com/bigcaibao/MTProxy-1/blob/main/readmecn.md)
 # MTProxy
 Highly-opinionated (ex-bullshit-free) MTPROTO proxy for [Telegram](https://telegram.org).
 
