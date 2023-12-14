@@ -37,23 +37,18 @@ Highly-opinionated (ex-bullshit-free) MTPROTO proxy for [Telegram](https://teleg
 ## Installation
 **This script uses the latest release of [9seconds/mtg](https://github.com/9seconds/mtg) by default**
 ~~~shell
-bash <(curl -Ls https://cpp.li/mtg)
+bash <(curl -Ls https://qwq.mx/mtg)
 ~~~
 **Due to the CDN cache, jsdelivr link may not be the latest.**
 ~~~shell
 bash <(curl -Ls https://cdn.jsdelivr.net/gh/missuo/MTProxy/mtproxy.sh)
 ~~~
 
-## TO DO
-- None
-
-## Bug Feedback
-[Issue](https://github.com/missuo/MTProxy/issues/new)
-
 ## Open Source Used
 [9seconds/mtg](https://github.com/9seconds/mtg)
 
-## LICENSE
-[MIT](https://github.com/missuo/MTProxy/blob/main/LICENSE)
+## Author
+
+**MTProxy** © [Vincent Young](https://github.com/missuo), Released under the [MIT](./LICENSE) License.<br>
 
 
